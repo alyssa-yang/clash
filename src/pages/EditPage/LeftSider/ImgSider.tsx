@@ -1,6 +1,5 @@
-import {defaultComponentStyle} from "src/utils/const";
-import {isImgComponent} from ".";
-import {addCmp} from "src/store/editStore";
+import { defaultComponentStyle, isImgComponent } from "src/utils/const";
+import { addCmp } from "src/store/editStore";
 import leftSideStyles from "./leftSide.module.less";
 
 const defaultStyle = {
@@ -285,9 +284,8 @@ const arithmetic = [
 
 arithmetic.forEach((item) => {
   settings.push({
-    value: `https://commom.pek3b.qingstor.com/all/arithmetic/${
-      item.indexOf(".") > 0 ? item : item + ".png"
-    }`,
+    value: `https://commom.pek3b.qingstor.com/all/arithmetic/${item.indexOf(".") > 0 ? item : item + ".png"
+      }`,
     style: defaultStyle,
   });
 });
@@ -302,11 +300,11 @@ const ImgSider = () => {
             draggable={true}
             key={item.value}
             className={leftSideStyles.item}
-            onClick={() => addCmp({...item, type: isImgComponent})}
+            onClick={() => addCmp({ ...item, type: isImgComponent })}
             onDragStart={(e) => {
               e.dataTransfer.setData(
                 "drag-cmp",
-                JSON.stringify({...item, type: isImgComponent})
+                JSON.stringify({ ...item, type: isImgComponent })
               );
             }}>
             <img src={item.value} draggable={false} alt="" />

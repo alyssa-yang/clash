@@ -1,26 +1,28 @@
 import React, { useEffect } from "react";
 import styles from "./index.module.less";
-import useEditStore, { addCmp, clearCanvas, fetchCanvas } from "src/store/editStore";
+import useEditStore, { addCmp, clearCanvas, fetchCanvas, initCanvas } from "src/store/editStore";
 import Cmp from '../Cmp'
 import { useCanvasId } from "src/store/hooks";
 import EditBox from "../EditBox";
 import useZoomStore from "src/store/zoomStore";
+import ReferenceLines from "../ReferenceLines";
 
 export default function Canvas() {
     const { zoom } = useZoomStore()
     const { canvas, assembly } = useEditStore()
-    const { cmps, style } = canvas
+    const { cmps, style } = canvas.content
     const id = useCanvasId()
-
+    console.log(cmps)
     useEffect(() => {
         if (id) {
             fetchCanvas(id)
-        } else {
-            clearCanvas()
+        }
+        return () => {
+            initCanvas()
         }
     }, [])
 
-    const onDrop = (e) => {
+    const onDrop = (e: React.MouseEvent<HTMLDivElement>) => {
         //读取被拖拽的组件信息
         let dragCmp = e.dataTransfer.getData('drag-cmp')
         if (!dragCmp) {
@@ -33,7 +35,7 @@ export default function Canvas() {
         const endY = e.pageY
 
         const canvasDomPos = {
-            top: 114,
+            top: 114 + 1,
             left: document.body.clientWidth / 2 - (((style.width as number) / 2) * (zoom / 100))
         }
 
@@ -49,7 +51,7 @@ export default function Canvas() {
 
         addCmp(dragCmp)
     }
-    const allowDrag = (e) => {
+    const allowDrag = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
     }
     return (
@@ -57,7 +59,7 @@ export default function Canvas() {
             id="canvas"
             style={{
                 ...style,
-                backgroundImage: `url(${style.backgroundImage})`,
+                backgroundImage: `url(${style.backgroundImage as string})`,
                 transform: `scale(${zoom / 100})`
             }}
             className={styles.main}
@@ -70,6 +72,7 @@ export default function Canvas() {
                 <Cmp key={item.key} cmp={item} index={index} isSelected={assembly.has(index)} />
             )
             )}
+            <ReferenceLines canvasStyle={style} />
         </div>
     );
 }

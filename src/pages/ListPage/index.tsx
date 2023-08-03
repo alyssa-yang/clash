@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Card, Space, Table, Button, Divider, Modal, message } from "antd";
+import { Card, Space, Table, Button, Divider, Modal, message, Image } from "antd";
 import { Link } from "react-router-dom";
 import Axios from "src/request/axios";
-import { deleteCanvasByIdEnd, getCanvasListEnd } from "src/request/end";
+import { deleteCanvasByIdEnd, getCanvasListEnd, saveCanvasEnd, publishEnd, unpublishEnd } from "src/request/end";
 import useUserStore from "src/store/userStore";
 
 type ListItem = {
@@ -10,9 +10,12 @@ type ListItem = {
     type: string;
     title: string;
     content: string;
+    publish: boolean;
 };
 
 const { confirm } = Modal;
+
+const pagination = { pageSize: 9999, current: 1 };
 
 export default function List() {
     const [list, setList] = useState<ListItem[]>([]);
@@ -38,9 +41,54 @@ export default function List() {
             }
         })
     }
+    const copy = async (item: ListItem) => {
+        const res = await Axios.post(saveCanvasEnd, {
+            id: null,
+            type: item.type,
+            title: item.title + " 副本",
+            content: item.content,
+        });
+        if (res) {
+            message.success("复制成功");
+            fresh();
+        }
+    }
+    const saveAsTpl = async (item: ListItem) => {
+        const res = await Axios.post(saveCanvasEnd, {
+            id: null,
+            type: "template",
+            title: item.title + " 模板",
+            content: item.content,
+        });
+
+        if (res) {
+            message.success("保存模板成功");
+            fresh();
+        }
+    };
+
+    const publish = async (id: number) => {
+        const res = await Axios.post(publishEnd, {
+            id,
+        });
+        if (res) {
+            message.success("发布成功");
+            fresh();
+        }
+    };
+
+    const unpublish = async (id: number) => {
+        const res = await Axios.post(unpublishEnd, {
+            id,
+        });
+        if (res) {
+            message.success("下架成功");
+            fresh();
+        }
+    };
     useEffect(() => {
         fresh();
-    }, []);
+    }, [isLogin]);
 
 
     const editUrl = (item: ListItem) => `/?id=${item.id}&type=${item.type}`;
@@ -48,6 +96,7 @@ export default function List() {
         {
             title: "id",
             key: "id",
+            width: 100,
             render: (item: ListItem) => {
                 return <Link to={editUrl(item)}>{item.id}</Link>;
             },
@@ -55,6 +104,7 @@ export default function List() {
         {
             title: "标题",
             key: "title",
+            width: 200,
             render: (item: ListItem) => {
                 const title = item.title || "未命名";
                 return <Link to={editUrl(item)}>{title}</Link>;
@@ -64,26 +114,59 @@ export default function List() {
         {
             title: "类型",
             key: "type",
+            width: 100,
             render: (item: ListItem) => {
                 const typeDesc = item.type === "content" ? "页面" : "模板页";
                 return <div className="red">{typeDesc}</div>;
             },
         },
-
         {
-            title: "动作",
+            title: "缩略图",
+            key: "thumbnail",
+            width: 100,
+            render: (item: ListItem) => {
+                return (
+                    item.thumbnail?.full && <Image src={item.thumbnail.full} alt={item.title} height={150} />
+                );
+            },
+        },
+        {
+            title: "操作",
             key: "action",
+            width: 200,
+            fixed: 'right',
             render: (item: ListItem) => {
                 const { id } = item;
                 return (
                     <Space size="middle">
-                        {/* <a
-                            target="_blank"
-                            href={"https://builder-lemon.vercel.app/?id=" + id}>
-                            线上查看（切移动端）
-                        </a> */}
-
+                        {item.type === "content" && (
+                            <>
+                                {item.publish === false ? (
+                                    <>
+                                        <a
+                                            target="_blank"
+                                            href={
+                                                "http://localhost:3000?id=" + id + "&preview"
+                                            }>
+                                            线下预览查看（切移动端）
+                                        </a>
+                                        <Button onClick={() => publish(id)}>发布</Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <a
+                                            target="_blank"
+                                            href={"http://localhost:3000?id=" + id}>
+                                            线上查看（切移动端）
+                                        </a>
+                                        <Button onClick={() => unpublish(id)}>下架</Button>
+                                    </>
+                                )}
+                            </>
+                        )}
                         <Link to={editUrl(item)}>编辑</Link>
+                        <Button onClick={() => copy(item)}>复制</Button>
+                        <Button onClick={() => saveAsTpl(item)}>保存为模版</Button>
                         <Button onClick={() => delConfirm(id)}>删除</Button>
                     </Space>
                 );
@@ -93,13 +176,13 @@ export default function List() {
 
     return (
         <Card>
-            <Link to={"/"}>新增</Link>
+            <Link to={"/"}><Button type="primary">新增</Button></Link>
             <Divider />
-
             <Table
                 columns={columns}
                 dataSource={list}
                 rowKey={(record: ListItem) => record.id}
+                pagination={pagination}
             />
         </Card>
     );

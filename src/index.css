@@ -20,7 +20,10 @@ code {
     monospace;
 }
 
-* {
+*,
+ol,
+ul,
+dl {
   margin: 0;
   padding: 0;
   border: none;
@@ -77,9 +80,8 @@ ul {
   color: red;
 }
 
-
 .loading {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -88,14 +90,13 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 9999999;
   font-size: 20px;
 }
 
-
 .selectedBorder {
-  /* margin-top: -2px;
-  margin-left: -2px; */
+  margin-top: -2px;
+  margin-left: -2px;
 
   border: solid 2px #02dcf7;
 }

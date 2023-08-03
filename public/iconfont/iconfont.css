@@ -1,8 +1,6 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 2377237 */
-  src: url('iconfont.woff2?t=1659412891465') format('woff2'),
-       url('iconfont.woff?t=1659412891465') format('woff'),
-       url('iconfont.ttf?t=1659412891465') format('truetype');
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1690991210799') format('truetype');
 }
 
 .iconfont {
@@ -17,79 +15,75 @@
   content: "\e695";
 }
 
+.icon-yulanxuanzhuan:before {
+  content: "\e626";
+}
+
 .icon-mobankuangjia-xianxing:before {
   content: "\e8a5";
+}
+
+.icon-yulan:before {
+  content: "\e67e";
+}
+
+.icon-zidingyibiaodan:before {
+  content: "\e66e";
+}
+
+.icon-fanchuan:before {
+  content: "\e629";
 }
 
 .icon-graphical:before {
   content: "\e67b";
 }
 
+.icon-wenben:before {
+  content: "\eac5";
+}
+
+.icon-yunxiazai_o:before {
+  content: "\ebb4";
+}
+
 .icon-baocun:before {
   content: "\e936";
 }
 
-.icon-shuxing:before {
-  content: "\e649";
+.icon-fanchuan1:before {
+  content: "\e612";
+}
+
+.icon-liebiao:before {
+  content: "\ec6b";
 }
 
 .icon-qingkong:before {
   content: "\e946";
 }
 
-.icon-xuanze:before {
-  content: "\e618";
+.icon-wenbenkuang:before {
+  content: "\e62a";
 }
 
-.icon-fabu:before {
-  content: "\e621";
+.icon-fanchuan2:before {
+  content: "\e74d";
 }
 
-.icon-cloud-download:before {
-  content: "\eb49";
+.icon-fanchuan3:before {
+  content: "\e691";
 }
 
-.icon-anniu:before {
-  content: "\e705";
+.icon-fish:before {
+  content: "\e64c";
 }
 
-.icon-wenben:before {
-  content: "\e61c";
+.icon-shangyibu:before {
+  content: "\e9cd";
 }
 
-.icon-tushu:before {
-  content: "\e608";
-}
-
-.icon-image:before {
-  content: "\e629";
-}
-
-.icon-shu:before {
-  content: "\e645";
-}
-
-.icon-Font_Linear:before {
-  content: "\e678";
-}
-
-.icon-chexiaofanhuichehuishangyibu:before {
-  content: "\e76b";
-}
-
-.icon-loading:before {
-  content: "\e61d";
-}
-
-.icon-xuanzhuan:before {
-  content: "\e6e2";
-}
-
-.icon-close:before {
-  content: "\e6dc";
-}
-
-.icon-wuqiongda:before {
-  content: "\e674";
+.icon-xiayibu:before {
+  content: "\e9ce";
 }
 

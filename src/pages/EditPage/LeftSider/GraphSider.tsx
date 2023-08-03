@@ -1,6 +1,5 @@
-import { defaultComponentStyle } from "src/utils/const";
+import { defaultComponentStyle, isGraphComponent } from "src/utils/const";
 
-import { isGraphComponent } from ".";
 import leftSideStyles from "./leftSide.module.less";
 import { addCmp } from "src/store/editStore";
 
@@ -38,7 +37,7 @@ const ImgSider = () => {
         {settings.map((item) => (
           <li
             draggable={true}
-            key={item.value}
+            key={item.key}
             className={leftSideStyles.item}
             onClick={() => addCmp({ ...item, type: isGraphComponent })}
             onDragStart={(e) => {

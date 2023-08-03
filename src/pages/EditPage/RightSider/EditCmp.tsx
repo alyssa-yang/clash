@@ -1,28 +1,30 @@
-import { ColorPicker, Form, Input, InputNumber, Select } from "antd";
-import styles from './index.module.less'
+import { Form, Input, Select } from "antd";
 import { updateSelectedCmpStyle, updateSelectedCmpAttr, editAssemblyStyle } from "src/store/editStore";
 import { ICmpWithKey } from "src/store/editStoreTypes";
-import { isImgComponent, isTextComponent } from "../LeftSider";
-const { Item } = Form
+import EditCmpStyle from "./EditCmpStyle";
 
-export default function EditCmp({ selectedCmp }: { selectedCmp: ICmpWithKey }) {
-    const { value, style, onClick = () => { } } = selectedCmp
+export default function EditCmp({ selectedCmp, formKeys }: { selectedCmp: ICmpWithKey, formKeys: string[] }) {
+    const { value, style, onClick = '', formItemName, alignPage } = selectedCmp
 
-    console.log(selectedCmp)
-    return <div className={styles.main}>
+    return <div>
         <Form
             initialValues={{
                 ...style,
                 value,
+                alignPage,
                 onClick
             }}
-            wrapperCol={{ span: 20, offset: 2 }}
-            labelAlign="left" onValuesChange={(values) => {
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 20 }}
+            labelWrap
+            labelAlign="left"
+            onValuesChange={(values) => {
                 const key = Object.keys(values)[0]
                 const value = Object.values(values)[0] as any
                 if (key === 'lineHeight') {
                     updateSelectedCmpStyle({ [key]: `${value}px` })
-                } else if (['backgroundColor', 'color', 'border'].includes(key)) {
+                } else if (['backgroundColor', 'color', 'borderColor'].includes(key)) {
+                    console.log('value.toHexString() ', value.toHexString())
                     updateSelectedCmpStyle({ [key]: value.toHexString() })
                 } else if (key === 'onClick') {
                     updateSelectedCmpAttr(key, value)
@@ -49,13 +51,50 @@ export default function EditCmp({ selectedCmp }: { selectedCmp: ICmpWithKey }) {
                             break;
                     }
                     editAssemblyStyle(newStyle)
+                    updateSelectedCmpAttr(key, value)
                 } else if (['fontWeight', 'textDecoration', 'textAlign', 'borderStyle'].includes(key)) {
                     updateSelectedCmpStyle({ [key]: value })
+                } else if (key === 'animationName') {
+                    const styleObj = {
+                        animationName: value as string,
+                        animationIterationCount: style.animationIterationCount ?? 1,
+                        animationDuration: `${style.animationDuration ?? 1}s`,
+                        animationDelay: `${style.animationDelay ?? 0}s`,
+                        animationPlayState: 'running'
+                    }
+                    updateSelectedCmpStyle(styleObj)
+                } else if (key === 'animationIterationCount') {
+                    updateSelectedCmpStyle({ [key]: value === 999 ? 'infinite' : value })
+                } else if (key === 'animationDuration' || key === 'animationDelay') {
+                    updateSelectedCmpStyle({ [key]: `${value}s` })
                 } else {
                     updateSelectedCmpStyle({ [key]: value - 0 })
                 }
             }}>
-            {selectedCmp.type === isImgComponent &&
+            {formItemName && <>
+                <Form.Item label="所属表单" name="formKey">
+                    <Select options={formKeys?.map(key => ({ value: key, label: key }))} />
+                </Form.Item>
+                <Form.Item label="form字段" name="formItemName">
+                    <Input />
+                </Form.Item>
+            </>}
+            <Form.Item label="对齐页面" name="alignPage">
+                <Select options={[
+                    { value: 'left', label: '左对齐' },
+                    { value: 'right', label: '右对齐' },
+                    { value: 'x-center', label: '水平居中' },
+                    { value: 'top', label: '上对齐' },
+                    { value: 'bottom', label: '下对齐' },
+                    { value: 'y-center', label: '垂直居中' }]} />
+            </Form.Item>
+            <EditCmpStyle
+                value={value}
+                styleName="style"
+                styleValue={style}
+                onClick={onClick}
+            />
+            {/* {selectedCmp.type === isImgComponent &&
                 <Item label="描述" name="value">
                     <Input />
                 </Item>}
@@ -126,6 +165,41 @@ export default function EditCmp({ selectedCmp }: { selectedCmp: ICmpWithKey }) {
             <Item label="点击跳转" name="onClick">
                 <Input />
             </Item>
+            <Item label="动画名称" name="animationName">
+                <Select options={[
+                    { value: 'none', label: '无动画' },
+                    { value: 'toggle', label: '闪烁' },
+                    { value: 'jello', label: '果冻' },
+                    { value: 'shake', label: '抖动' },
+                    { value: 'wobble', label: '左右摇摆' }]} />
+            </Item>
+            {style.animationName && <>
+                <Item label="动画持续时长" name="animationDuration" >
+                    <InputNumber precision={1} min={1} addonAfter="s" />
+                </Item>
+                <Item label="动画延迟时间" name="animationDelay" >
+                    <InputNumber precision={1} min={1} addonAfter="s" />
+                </Item>
+                <Item label="动画循环次数" name="animationIterationCount" help="999代表无数次" >
+                    <InputNumber precision={0} min={1} />
+                </Item>
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            const value = style.animationName
+                            updateSelectedCmpStyle({ animationName: '' })
+                            setTimeout(() => {
+                                updateSelectedCmpStyle({ animationName: value, animationPlayState: 'running' })
+                            }, 0)
+                        }}>重新演示动画</Button>
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            updateSelectedCmpStyle({ animationPlayState: 'paused' })
+                        }}>暂停演示动画</Button>
+                </Space>
+            </>} */}
         </Form>
     </div >
 

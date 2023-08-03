@@ -6,7 +6,7 @@ const { Item } = Form
 
 export default function EditCanvas({ canvas }: { canvas: ICanvas }) {
     const [form] = Form.useForm();
-    const style = canvas.style;
+    const style = canvas.content.style;
 
     useEffect(() => {
         form.setFieldsValue({

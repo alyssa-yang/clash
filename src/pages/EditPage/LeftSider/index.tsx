@@ -4,24 +4,25 @@ import styles from "./index.module.less";
 import TextSider from "./TextSider";
 import ImgSider from "./ImgSider";
 import GraphSider from "./GraphSider";
+import { isImgComponent, isTextComponent, isGraphComponent, isFormComponent } from "src/utils/const";
+import TemplateSider from "./TemplateSider";
+import FormSider from "./FormSider";
 
-export const isTextComponent = 1;
-export const isImgComponent = 2;
-export const isGraphComponent = 3;
+export const isTemplate = 0;
 
 const LeftSider = memo(() => {
-    const [showSide, setShowSide] = useState(0);
+    const [showSide, setShowSide] = useState(-1);
 
     const _setShowSide = (which: number | undefined) => {
         if (showSide === which) {
-            setShowSide(0);
+            setShowSide(-1);
         } else {
-            setShowSide(which || 0);
+            setShowSide(which ?? -1);
         }
     };
 
     useEffect(() => {
-        const cancelShow = () => setShowSide(0);
+        const cancelShow = () => setShowSide(-1);
         document.getElementById("center")?.addEventListener("click", cancelShow);
         return () => {
             document
@@ -35,6 +36,15 @@ const LeftSider = memo(() => {
     return (
         <div className={styles.main}>
             <ul className={styles.cmps}>
+                <li
+                    className={classNames(
+                        styles.cmp,
+                        showSide === isTemplate ? styles.selected : ""
+                    )}
+                    onClick={() => _setShowSide(isTemplate)}>
+                    <i className={classNames("iconfont icon-mobankuangjia-xianxing", styles.cmpIcon)} />
+                    <span className={styles.cmpText}>模版</span>
+                </li>
                 <li
                     className={classNames(
                         styles.cmp,
@@ -64,11 +74,21 @@ const LeftSider = memo(() => {
                     />
                     <span className={styles.cmpText}>图形</span>
                 </li>
+                <li
+                    className={classNames(
+                        styles.cmp,
+                        showSide === isFormComponent ? styles.selected : ""
+                    )}
+                    onClick={() => _setShowSide(isFormComponent)}>
+                    <i className={classNames("iconfont icon-zidingyibiaodan", styles.cmpIcon)} />
+                    <span className={styles.cmpText}>表单</span>
+                </li>
             </ul>
-
+            {showSide === isTemplate && <TemplateSider />}
             {showSide === isTextComponent && <TextSider />}
             {showSide === isImgComponent && <ImgSider />}
             {showSide === isGraphComponent && <GraphSider />}
+            {showSide === isFormComponent && <FormSider />}
         </div>
     );
 });

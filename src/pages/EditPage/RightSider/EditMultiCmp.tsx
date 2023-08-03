@@ -1,10 +1,10 @@
-import { Form, Select } from "antd";
-import styles from './index.module.less'
-import { editAssemblyStyle } from "src/store/editStore";
+import { Button, Form, Select } from "antd";
+import { cancelGroupCmps, editAssemblyStyle, groupCmps } from "src/store/editStore";
 const { Item } = Form
 
-export default function EditMultiCmp() {
-    return <div className={styles.main}>
+export default function EditMultiCmp({ isGroup }: { isGroup: boolean }) {
+
+    return <div>
         <Form
             wrapperCol={{ span: 20, offset: 2 }}
             labelAlign="left" onValuesChange={(values) => {
@@ -46,6 +46,8 @@ export default function EditMultiCmp() {
                     { value: 'y-center', label: '垂直居中' }]} />
             </Item>
 
+            {isGroup ? <Button type="primary" danger size="large" onClick={cancelGroupCmps}>取消组合</Button> :
+                <Button type="primary" danger size="large" onClick={groupCmps}>组合</Button>}
         </Form>
     </div >
 

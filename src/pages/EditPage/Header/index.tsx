@@ -1,20 +1,52 @@
 import classNames from 'classnames'
 import styles from './index.module.less'
-import { Link, useNavigate } from 'react-router-dom'
-import { useCanvasId, useCanvasType } from 'src/store/hooks'
-import { clearCanvas, saveCanvas } from 'src/store/editStore'
+import { Link, unstable_usePrompt, useNavigate } from 'react-router-dom'
+import useEditStore, { clearCanvas, saveCanvas } from 'src/store/editStore'
 import { message } from 'antd'
 import { goNextCanvasHistory, goPrevCanvasHistory } from 'src/store/historySlice'
+import { useEffect } from 'react'
 
 export default function Header() {
-    const id = useCanvasId()
-    const type = useCanvasType()
     const navigate = useNavigate()
 
+    const hasSavedCanvas = useEditStore(({ hasSavedCanvas }) => hasSavedCanvas)
+
+    unstable_usePrompt({
+        when: !hasSavedCanvas,
+        message: '离开后数据将不会保存，确认离开吗'
+    })
+    useEffect(() => {
+        document.addEventListener('keydown', keyDown)
+        return () => {
+            document.removeEventListener('keydown', keyDown)
+        }
+    }, [])
+
+    const keyDown = (e: any) => {
+        if ((e.target as Element).nodeName === 'TEXTAREA') {
+            return
+        }
+        if (e.metaKey) {
+            switch (e.code) {
+                case 'KeyZ':
+                    if (e.shiftKey) {
+                        goNextCanvasHistory()
+                    } else {
+                        goPrevCanvasHistory()
+                    }
+                    return
+                case 'KeyS':
+                    e.preventDefault()
+                    save()
+                    return
+            }
+        }
+    }
+
     const save = () => {
-        saveCanvas(id, type, (_id) => {
+        saveCanvas((_id, isNew) => {
             message.success('保存成功')
-            if (id === null) {
+            if (isNew) {
                 //新增
                 navigate(`?id=${_id}`)
             }
@@ -25,24 +57,44 @@ export default function Header() {
     }
 
     const saveAndPreview = () => {
-        saveCanvas(id, type, (_id) => {
+        saveCanvas((_id, isNew) => {
             message.success('保存成功')
-            if (id === null) {
+            if (isNew) {
                 //新增
                 navigate(`?id=${_id}`)
             }
             // 跳转生成器项目页
-            window.open(`http://builder.codebus.tech?id=${id === null ? _id : id}`);
+            window.open(`http://localhost:3000?id=${_id}`);
         })
 
     }
 
-
+    const saveAndDownload = () => {
+        saveCanvas((_id, isNew, res) => {
+            message.success('保存成功')
+            if (isNew) {
+                //新增
+                navigate(`?id=${_id}`)
+            }
+            // 下载图片
+            const img = res.thumbnail.full;
+            const ele = document.createElement('a')
+            ele.href = img.replace("http://localhost:3000/", "");
+            ele.download = res.title + '.png'
+            ele.style.display = 'none'
+            document.body.appendChild(ele)
+            ele.click()
+            document.body.removeChild(ele)
+        })
+    }
     return <div className={styles.main}>
         <div className={classNames(styles.item)}>
-            <Link to="/list" className="red">
+            <span
+                className={classNames("iconfont icon-liebiao", styles.icon)}></span>
+            <Link to="/list" >
                 查看列表
             </Link>
+
         </div>
 
         <div className={classNames(styles.item)} onClick={save}>
@@ -53,14 +105,14 @@ export default function Header() {
 
         <div className={classNames(styles.item)} onClick={saveAndPreview}>
             <span
-                className={classNames("iconfont icon-baocun", styles.icon)}></span>
+                className={classNames("iconfont icon-yulan", styles.icon)}></span>
             <span className={styles.txt}>保存并预览</span>
         </div>
 
         <div className={classNames(styles.item)} onClick={() => goPrevCanvasHistory()}>
             <span
                 className={classNames(
-                    "iconfont icon-chexiaofanhuichehuishangyibu",
+                    "iconfont icon-shangyibu",
                     styles.icon
                 )}></span>
             <span className={styles.txt}>上一步</span>
@@ -70,7 +122,7 @@ export default function Header() {
         <div className={classNames(styles.item)} onClick={() => goNextCanvasHistory()}>
             <span
                 className={classNames(
-                    "iconfont icon-chexiaofanhuichehuishangyibu",
+                    "iconfont icon-xiayibu",
                     styles.icon
                 )}
                 style={{ transform: `rotateY{180}deg` }}></span>
@@ -82,6 +134,12 @@ export default function Header() {
             <span
                 className={classNames("iconfont icon-qingkong", styles.icon)}></span>
             <span className={styles.txt}>清空</span>
+        </div>
+
+        <div className={classNames(styles.item)} onClick={saveAndDownload}>
+            <span
+                className={classNames("iconfont icon-yunxiazai_o", styles.icon)}></span>
+            <span className={styles.txt}>保存并下载图片</span>
         </div>
     </div>
 }
