@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getTemplateListEnd } from "src/request/end";
 import Axios from "src/request/axios";
 import { settings } from "./tpl";
+import { addCanvasByTemplate } from "src/store/editStore";
 
 
 const TemplateSider = () => {
@@ -40,13 +41,6 @@ const TemplateSider = () => {
               addCanvasByTemplate(item);
             }}>
             <div className={leftSideStyles.desc}>{item.title}</div>
-            <img
-              src={
-                // item.thumbnail?.header ||
-                "https://www.bubucuo.cn/react-head.png"
-              }
-              alt={item.title}
-            />
           </li>
         ))}
       </ul>

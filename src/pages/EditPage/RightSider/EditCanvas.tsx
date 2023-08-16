@@ -27,7 +27,7 @@ export default function EditCanvas({ canvas }: { canvas: ICanvas }) {
                 if (Object.keys(value)[0] === 'title') {
                     updateCanvasTitle(Object.values(value)[0] as string)
                 } else if (Object.keys(value)[0] === 'backgroundColor') {
-                    updateCanvasStyle({ 'backgroundColor': Object.values(value)[0].toHexString() })
+                    updateCanvasStyle({ 'backgroundColor': Object?.values(value as Object)[0].toHexString() })
                 } else {
                     updateCanvasStyle(value)
                 }

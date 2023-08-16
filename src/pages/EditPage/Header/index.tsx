@@ -64,7 +64,7 @@ export default function Header() {
                 navigate(`?id=${_id}`)
             }
             // 跳转生成器项目页
-            window.open(`http://localhost:3000?id=${_id}`);
+            window.open(`https://clash-builder.echoyore.tech?id=${_id}`);
         })
 
     }
@@ -79,7 +79,7 @@ export default function Header() {
             // 下载图片
             const img = res.thumbnail.full;
             const ele = document.createElement('a')
-            ele.href = img.replace("http://localhost:3000/", "");
+            ele.href = img.replace("https://clash-builder.echoyore.tech/", "");
             ele.download = res.title + '.png'
             ele.style.display = 'none'
             document.body.appendChild(ele)

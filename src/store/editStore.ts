@@ -25,36 +25,63 @@ import {
 const showDiff = 12
 const adjustDiff = 3
 
-const defaultCanvasData = {
-  canvas: {
-    id: null,
-    title: '未命名',
-    type: 'content',
-    content: getDefaultCanvasContent()
-  },
-  hasSavedCanvas: true,
-  //记录选中组件的下标
-  assembly: new Set(),
-  canvasChangeHistory: [
-    {
-      canvas: {
-        id: null,
-        title: '未命名',
-        type: 'content',
-        content: getDefaultCanvasContent()
-      },
-      assembly: new Set()
-    }
-  ],
-  canvasChangeHistoryIndex: 0
-}
 const useEditStore = create(
-  immer<EditStoreState & EditStoreAction>(() => defaultCanvasData)
+  immer<EditStoreState & EditStoreAction>(() => ({
+    canvas: {
+      id: null,
+      title: '未命名',
+      type: 'content',
+      content: getDefaultCanvasContent()
+    },
+
+    hasSavedCanvas: true, // 画布编辑后是否被保存
+    // 记录选中组件的下标
+    assembly: new Set(),
+
+    // 历史
+    canvasChangeHistory: [
+      {
+        canvas: {
+          id: null,
+          title: '未命名',
+          type: 'content',
+          content: getDefaultCanvasContent()
+        },
+        assembly: new Set()
+      }
+    ],
+    canvasChangeHistoryIndex: 0
+  }))
 )
+
+// 初始化
 export const initCanvas = () => {
   useEditStore.setState(draft => {
-    Object.assign(draft, defaultCanvasData)
+    ;(draft.canvas = {
+      id: null,
+      title: '未命名',
+      type: 'content',
+      content: getDefaultCanvasContent()
+    }),
+      (draft.hasSavedCanvas = true) // 画布编辑后是否被保存
+    // 记录选中组件的下标
+    draft.assembly = new Set()
+
+    // 历史
+    ;(draft.canvasChangeHistory = [
+      {
+        canvas: {
+          id: null,
+          title: '未命名',
+          type: 'content',
+          content: getDefaultCanvasContent()
+        },
+        assembly: new Set()
+      }
+    ]),
+      (draft.canvasChangeHistoryIndex = 0)
   })
+
   resetZoom()
 }
 //全部选中
@@ -517,10 +544,14 @@ export const updateSelectedCmpStyle = (
 }
 
 //修改单个组件的属性 value、onClick
-export const updateSelectedCmpAttr = (key: string, value: any) => {
-  useEditStore.setState(draft => {
+export const updateSelectedCmpAttr = (key: string, value: string | Object) => {
+  useEditStore.setState((draft: any) => {
     const selectedIndex = selectedCmpIndexSelector(draft)
-    draft.canvas.content.cmps[selectedIndex][key] = value
+    if (typeof value === 'object') {
+      Object.assign(draft.canvas.content.cmps[selectedIndex][key], value)
+    } else {
+      draft.canvas.content.cmps[selectedIndex][key] = value
+    }
     draft.hasSavedCanvas = false
     recordCanvasChangeHistory(draft)
   })
@@ -601,9 +632,8 @@ export const addCmp = (_cmp: ICmpWithKey) => {
 //删除组件
 export const delSelectedCmps = () => {
   useEditStore.setState(draft => {
-    let { cmps } = draft.canvas.content
+    let { cmps, formKeys } = draft.canvas.content
     const map = getCmpsMap(cmps)
-    const assembly = draft.assembly
     const newAssembly: Set<number> = new Set()
 
     draft.assembly.forEach(index => {
@@ -616,7 +646,7 @@ export const delSelectedCmps = () => {
 
     //删除单个组件组件的子节点之后，需要调整父组件的位置和宽高
     if (newAssembly.size === 1) {
-      const child: ICmpWithKey = cmps[Array.from(newAssembly[0])]
+      const child: ICmpWithKey = cmps[Array.from(newAssembly)[0]]
       // child是要被删除的组件，所以要调整矩形，这个矩形的位置和宽高根据除child之外的组合子组件来计算
       if (child.groupKey) {
         const groupIndex = map.get(child.groupKey)
@@ -829,6 +859,7 @@ export const groupCmps = () => {
     recordCanvasChangeHistory(draft)
   })
 }
+
 //取消组合
 export const cancelGroupCmps = () => {
   useEditStore.setState(draft => {

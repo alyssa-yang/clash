@@ -9,7 +9,7 @@ export default function Center() {
   const canvas = useEditStore(state => state.canvas)
   const { zoom, zoomIn, zoomOut } = useZoomStore()
 
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if ((e.target as Element).nodeName === 'TEXTAREA') {
       return
     }
@@ -87,9 +87,9 @@ export default function Center() {
         minHeight: (zoom / 100) * canvas.content.style.height + 100
       }}
       tabIndex={0}
-      onClick={e => {
-        if (e.target?.id === 'center') {
-          setCmpSelected(-1)
+      onClick={(e: React.MouseEvent) => {
+        if ((e.target as HTMLElement).id.indexOf("cmp") === -1) {
+          setCmpSelected(-1);
         }
       }}
       onKeyDown={onKeyDown}

@@ -4,7 +4,7 @@ import { isString } from 'lodash'
 // 获取画布唯一标识id
 export function useCanvasId (): number | null {
   const [params] = useSearchParams()
-  let id = params.get('id')
+  let id: any = params.get('id')
 
   if (isString(id)) {
     id = parseInt(id)

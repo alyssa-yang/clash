@@ -1,6 +1,5 @@
 import axios from './axios'
-// export const end = "//www.bubucuo.cn";
-export const end = '' //"//template.josephxia.com";
+export const end = 'clash-server.echoyore.tech'
 
 // 注册 post
 export const registerEnd = end + '/api/register'

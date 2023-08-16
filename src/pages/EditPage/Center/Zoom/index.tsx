@@ -47,7 +47,7 @@ export default function Zoom() {
           precision={0}
           step={5}
           value={zoom}
-          onChange={(value) => {
+          onChange={(value: any) => {
             setZoom(value);
           }}
         />

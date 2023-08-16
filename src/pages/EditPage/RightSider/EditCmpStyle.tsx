@@ -149,7 +149,7 @@ export default function EditCmpStyle({
                 <Button
                     type="primary"
                     onClick={() => {
-                        const value = style.animationName
+                        const value = styleValue.animationName
                         updateSelectedCmpStyle({ animationName: '' })
                         setTimeout(() => {
                             updateSelectedCmpStyle({ animationName: value, animationPlayState: 'running' })

@@ -16,6 +16,7 @@ import { loginEnd } from "src/request/end";
 import Item from "src/components/Item";
 import { useEffect, useState } from "react";
 import { Select } from "antd";
+import { getOnlyKey } from "src/utils";
 
 // 组合组件
 const settings = [
@@ -28,10 +29,11 @@ const settings = [
       width: 170,
       height: 30,
     },
+    key: getOnlyKey(),
     children: [
       {
         type: isTextComponent,
-        key: "",
+        key: getOnlyKey(),
         value: "姓名",
         style: {
           ...defaultComponentStyle_0,
@@ -60,6 +62,7 @@ const settings = [
         formItemName: "name", // form item key
         inputType: "text",
         value: "",
+        key: getOnlyKey(),
         placeholder: "请输入",
         style: {
           ...defaultComponentStyle_0,
@@ -85,6 +88,7 @@ const settings = [
   {
     type: isGroupComponent | isFormComponent,
     desc: "密码",
+    key: getOnlyKey(),
     style: {
       ...defaultComponentStyle_0,
       width: 170,
@@ -93,7 +97,7 @@ const settings = [
     children: [
       {
         type: isTextComponent,
-        key: "",
+        key: getOnlyKey(),
         value: "密码",
         style: {
           ...defaultComponentStyle_0,
@@ -119,6 +123,7 @@ const settings = [
       {
         // input
         type: isFormComponent_Input,
+        key: getOnlyKey(),
         formItemName: "password", // form item key
         inputType: "password",
         value: "",
@@ -148,6 +153,7 @@ const settings = [
   {
     //  button
     type: isFormComponent_Button,
+    key: getOnlyKey(),
     formItemName: "submit",
     value: "提交",
     desc: "提交按钮",
@@ -168,7 +174,7 @@ const settings = [
     },
     onClick: {
       // post
-      url: "http://template.echoyore.tech" + loginEnd,
+      url: "http://clash-server.echoyore.tech" + loginEnd,
       afterSuccess: "pop", //url
       popMsg: "弹出提示语",
       link: "",
@@ -209,7 +215,7 @@ const FormSider = () => {
             key={"form" + index}
             className={leftSideStyles.item}
             onClick={() => {
-              addCmp({ ...item, formKey: selectedFormKey });
+              addCmp({ ...item, formKey: selectedFormKey as string } as any);
             }}
             onDragStart={(e) => {
               e.dataTransfer.setData(

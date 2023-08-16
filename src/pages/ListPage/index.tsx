@@ -11,6 +11,9 @@ type ListItem = {
     title: string;
     content: string;
     publish: boolean;
+    thumbnail: {
+        full: string
+    }
 };
 
 const { confirm } = Modal;
@@ -134,7 +137,7 @@ export default function List() {
             title: "操作",
             key: "action",
             width: 200,
-            fixed: 'right',
+            fixed: 'right' as const,
             render: (item: ListItem) => {
                 const { id } = item;
                 return (
@@ -146,7 +149,7 @@ export default function List() {
                                         <a
                                             target="_blank"
                                             href={
-                                                "http://localhost:3000?id=" + id + "&preview"
+                                                "https://clash-builder.echoyore.tech?id=" + id + "&preview"
                                             }>
                                             线下预览查看（切移动端）
                                         </a>
@@ -156,7 +159,7 @@ export default function List() {
                                     <>
                                         <a
                                             target="_blank"
-                                            href={"http://localhost:3000?id=" + id}>
+                                            href={"https://clash-builder.echoyore.tech?id=" + id}>
                                             线上查看（切移动端）
                                         </a>
                                         <Button onClick={() => unpublish(id)}>下架</Button>

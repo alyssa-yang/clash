@@ -1,5 +1,6 @@
 import { Button, Form, Select } from "antd";
 import { cancelGroupCmps, editAssemblyStyle, groupCmps } from "src/store/editStore";
+import { Style } from "src/store/editStoreTypes";
 const { Item } = Form
 
 export default function EditMultiCmp({ isGroup }: { isGroup: boolean }) {
@@ -11,7 +12,7 @@ export default function EditMultiCmp({ isGroup }: { isGroup: boolean }) {
                 const key = Object.keys(values)[0]
                 const value = Object.values(values)[0] as any
                 if (key === 'alignPage') {
-                    const newStyle = {}
+                    const newStyle: Style = {}
                     switch (value) {
                         case 'left':
                             newStyle.left = 0;

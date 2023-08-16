@@ -12,7 +12,7 @@ export default function StretchDots(props: IStretchProps) {
   const { width, height, transform } = style;
 
   // 伸缩组件 style top left width height
-  const onMouseDown = (e) => {
+  const onMouseDown = (e: any) => {
     const direction = e.target.dataset.direction
     if (!direction) {
       return

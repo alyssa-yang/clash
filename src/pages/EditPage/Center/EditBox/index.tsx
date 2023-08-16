@@ -1,7 +1,7 @@
 
 import { throttle } from "lodash";
 import styles from "./index.module.less";
-import useEditStore, { recordCanvasChangeHistory_2, updateAssemblyCmpsByDistance, updateSelectedCmpAttr, updateSelectedCmpStyle } from "src/store/editStore";
+import useEditStore, { recordCanvasChangeHistory_2, setCmpSelected, updateAssemblyCmpsByDistance, updateSelectedCmpAttr, updateSelectedCmpStyle } from "src/store/editStore";
 import useZoomStore from "src/store/zoomStore";
 import StretchDots from "./StretchDots";
 import { isGroupComponent, isTextComponent } from "src/utils/const";

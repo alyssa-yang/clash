@@ -22,9 +22,9 @@ export default function Canvas() {
         }
     }, [])
 
-    const onDrop = (e: React.MouseEvent<HTMLDivElement>) => {
+    const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
         //读取被拖拽的组件信息
-        let dragCmp = e.dataTransfer.getData('drag-cmp')
+        let dragCmp: any = e.dataTransfer.getData('drag-cmp')
         if (!dragCmp) {
             return
         }

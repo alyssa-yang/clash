@@ -2,7 +2,7 @@ import { defaultComponentStyle, isTextComponent } from "src/utils/const";
 import leftSideStyles from "./leftSide.module.less";
 import { addCmp } from "src/store/editStore";
 
-const defaultStyle: React.CSSProperties = {
+const defaultStyle: any = {
   ...defaultComponentStyle,
   width: 170,
   height: 30,
@@ -45,7 +45,7 @@ const TextSider = () => {
               e.dataTransfer.setData('drag-cmp', JSON.stringify({ ...item, type: isTextComponent }))
             }}
             className={leftSideStyles.item}
-            onClick={() => addCmp({ ...item, type: isTextComponent })}>
+            onClick={() => addCmp({ ...item, type: isTextComponent } as any)}>
             {item.value.indexOf("双击编辑") > -1
               ? item.value.slice(4)
               : item.value}

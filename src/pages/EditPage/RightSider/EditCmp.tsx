@@ -1,6 +1,6 @@
 import { Form, Input, Select } from "antd";
 import { updateSelectedCmpStyle, updateSelectedCmpAttr, editAssemblyStyle } from "src/store/editStore";
-import { ICmpWithKey } from "src/store/editStoreTypes";
+import { ICmpWithKey, Style } from "src/store/editStoreTypes";
 import EditCmpStyle from "./EditCmpStyle";
 
 export default function EditCmp({ selectedCmp, formKeys }: { selectedCmp: ICmpWithKey, formKeys: string[] }) {
@@ -29,7 +29,7 @@ export default function EditCmp({ selectedCmp, formKeys }: { selectedCmp: ICmpWi
                 } else if (key === 'onClick') {
                     updateSelectedCmpAttr(key, value)
                 } else if (key === 'alignPage') {
-                    const newStyle = {}
+                    const newStyle: Style = {}
                     switch (value) {
                         case 'left':
                             newStyle.left = 0;
