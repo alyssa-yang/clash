@@ -1,0 +1,21 @@
+name: Public Template SERVER
+
+on:
+  push:
+    branches: [master]
+jobs:
+  PullSource:
+    runs-on: ubuntu-latest
+    name: "PullSource"
+    steps:
+      - name: Pull source
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: "60.204.201.121"
+          username: root
+          key: ${{ secrets.ACCESS_TOKEN }}
+          script: |
+            cd /root/source/clash/
+            git pull
+            pnpm i
+            pnpm build
