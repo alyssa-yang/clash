@@ -7,8 +7,8 @@ import './index.css'
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<RequiredAuth />}>
-      <Route index element={<EditPage />} />
       <Route path="list" element={<ListPage />} />
+      <Route index element={<EditPage />} />
     </Route>
   ))
   return <RouterProvider router={router} />

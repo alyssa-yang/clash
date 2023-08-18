@@ -46,12 +46,12 @@ export default function EditBox() {
             disX = disX * (100 / zoom)
             disY = disY * (100 / zoom)
 
+            //  拖拽，允许自动调整
             updateAssemblyCmpsByDistance({ top: disY, left: disX }, true)
             startX = x
             startY = y
-
-
         }, 50)
+
         const up = () => {
             //隐藏吸附线
             document.querySelectorAll('.alignLine').forEach(ele => {

@@ -16,12 +16,11 @@ export default function RequiredAuth() {
         backgroundColor: "black",
     };
     return <Layout>
-        {loading && <div>
-            <Spin size="large" />
-        </div>}
-        <Header style={headerStyle}>
-            <Login />
-        </Header>
-        <Outlet />
+        <Spin size="large" spinning={loading}>
+            <Header style={headerStyle}>
+                <Login />
+            </Header>
+            <Outlet />
+        </Spin>
     </Layout>
 }

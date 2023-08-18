@@ -51,10 +51,10 @@ export default function Rotate(props: IRotateProps) {
 
     const up = () => {
       recordCanvasChangeHistory_2()
-      document.removeEventListener('mouseover', move)
+      document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
     }
-    document.addEventListener('mouseover', move)
+    document.addEventListener('mousemove', move)
     document.addEventListener('mouseup', up)
   }
   return <div

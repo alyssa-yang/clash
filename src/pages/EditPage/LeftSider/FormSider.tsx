@@ -160,8 +160,8 @@ const settings = [
     style: {
       ...defaultComponentStyle,
       width: 150,
-      height: 60,
-      lineHeight: "60px",
+      height: 40,
+      lineHeight: "40px",
       textAlign: "center",
       backgroundColor: "blue",
       borderStyle: "none",

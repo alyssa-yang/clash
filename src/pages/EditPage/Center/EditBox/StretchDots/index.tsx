@@ -56,10 +56,10 @@ export default function StretchDots(props: IStretchProps) {
     }, 50)
     const up = () => {
       recordCanvasChangeHistory_2()
-      document.removeEventListener('mouseover', move)
+      document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
     }
-    document.addEventListener('mouseover', move)
+    document.addEventListener('mousemove', move)
     document.addEventListener('mouseup', up)
   };
 
