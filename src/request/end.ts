@@ -1,5 +1,5 @@
 import axios from './axios'
-export const end = 'clash-server.echoyore.tech'
+export const end = ''
 
 // 注册 post
 export const registerEnd = end + '/api/register'
