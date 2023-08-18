@@ -19,4 +19,4 @@ jobs:
             git pull
             pnpm i
             pnpm build
-            scp -r /root/source/clash/dist /app
+            scp /root/source/clash/dist /app
