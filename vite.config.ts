@@ -7,7 +7,8 @@ import { build } from 'vite'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://clash-server.echoyore.tech'
+      // '/api': 'http://clash-server.echoyore.tech'
+      '/api': 'http://localhost:4000'
     }
   },
   plugins: [tsconfigPaths(), react()],

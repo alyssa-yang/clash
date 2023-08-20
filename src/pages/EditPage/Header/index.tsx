@@ -75,7 +75,7 @@ export default function Header() {
             message.success('保存成功')
             if (isNew) {
                 //新增
-                navigate(`?id=${_id}`)
+                navigate(`${builderHost}?id=${_id}`)
             }
             // 下载图片
             const img = res.thumbnail.full;
