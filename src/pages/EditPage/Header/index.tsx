@@ -5,7 +5,7 @@ import useEditStore, { clearCanvas, saveCanvas } from 'src/store/editStore'
 import { message } from 'antd'
 import { goNextCanvasHistory, goPrevCanvasHistory } from 'src/store/historySlice'
 import { useEffect } from 'react'
-import { builderHost } from 'src/request/end'
+import { builderHost, serverHost } from 'src/request/end'
 
 export default function Header() {
     const navigate = useNavigate()
@@ -75,12 +75,12 @@ export default function Header() {
             message.success('保存成功')
             if (isNew) {
                 //新增
-                navigate(`${builderHost}?id=${_id}`)
+                navigate(`?id=${_id}`)
             }
             // 下载图片
             const img = res.thumbnail.full;
             const ele = document.createElement('a')
-            ele.href = img.replace(`${builderHost}/`, "");
+            ele.href = img.replace(`${serverHost}/`, "");
             ele.download = res.title + '.png'
             ele.style.display = 'none'
             document.body.appendChild(ele)
