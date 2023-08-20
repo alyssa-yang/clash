@@ -72,6 +72,7 @@ export default function Header() {
 
     const saveAndDownload = () => {
         saveCanvas((_id, isNew, res) => {
+            console.log(1111, res)
             message.success('保存成功')
             if (isNew) {
                 //新增
