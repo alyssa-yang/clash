@@ -12,7 +12,7 @@ import useEditStore, {
   selectedSingleCmpSelector,
 } from "src/store/editStore";
 import leftSideStyles from "./leftSide.module.less";
-import { loginEnd } from "src/request/end";
+import { loginEnd, serverHost } from "src/request/end";
 import Item from "src/components/Item";
 import { useEffect, useState } from "react";
 import { Select } from "antd";
@@ -174,7 +174,7 @@ const settings = [
     },
     onClick: {
       // post
-      url: "http://clash-server.echoyore.tech" + loginEnd,
+      url: serverHost + loginEnd,
       afterSuccess: "pop", //url
       popMsg: "弹出提示语",
       link: "",

@@ -5,6 +5,7 @@ import useEditStore, { clearCanvas, saveCanvas } from 'src/store/editStore'
 import { message } from 'antd'
 import { goNextCanvasHistory, goPrevCanvasHistory } from 'src/store/historySlice'
 import { useEffect } from 'react'
+import { builderHost } from 'src/request/end'
 
 export default function Header() {
     const navigate = useNavigate()
@@ -64,7 +65,7 @@ export default function Header() {
                 navigate(`?id=${_id}`)
             }
             // 跳转生成器项目页
-            window.open(`https://clash-builder.echoyore.tech?id=${_id}`);
+            window.open(`${builderHost}?id=${_id}`);
         })
 
     }
@@ -79,7 +80,7 @@ export default function Header() {
             // 下载图片
             const img = res.thumbnail.full;
             const ele = document.createElement('a')
-            ele.href = img.replace("https://clash-builder.echoyore.tech/", "");
+            ele.href = img.replace(`${builderHost}/`, "");
             ele.download = res.title + '.png'
             ele.style.display = 'none'
             document.body.appendChild(ele)

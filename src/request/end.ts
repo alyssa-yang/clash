@@ -1,4 +1,10 @@
 import axios from './axios'
+// export const serverHost = 'http://localhost:4000'
+// export const builderHost = 'http://localhost:5002'
+
+export const serverHost = 'http://clash-server.echoyore.tech'
+export const builderHost = 'http://clash-builder.echoyore.tech'
+
 export const end = ''
 
 // 注册 post

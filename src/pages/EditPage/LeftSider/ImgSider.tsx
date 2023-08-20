@@ -1,12 +1,13 @@
 import { defaultComponentStyle, isImgComponent } from "src/utils/const";
 import { addCmp } from "src/store/editStore";
 import leftSideStyles from "./leftSide.module.less";
+import { serverHost } from "src/request/end";
 
 const defaultStyle = {
   ...defaultComponentStyle,
 };
 
-const url = "https://clash-server.echoyore.tech/static/upload/";
+const url = `${serverHost}/static/upload/`;
 
 const settings = [
   {

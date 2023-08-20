@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Space, Table, Button, Divider, Modal, message, Image } from "antd";
 import { Link } from "react-router-dom";
 import Axios from "src/request/axios";
-import { deleteCanvasByIdEnd, getCanvasListEnd, saveCanvasEnd, publishEnd, unpublishEnd } from "src/request/end";
+import { deleteCanvasByIdEnd, getCanvasListEnd, saveCanvasEnd, publishEnd, unpublishEnd, builderHost } from "src/request/end";
 import useUserStore from "src/store/userStore";
 
 type ListItem = {
@@ -140,8 +140,9 @@ export default function List() {
             fixed: 'right' as const,
             render: (item: ListItem) => {
                 const { id } = item;
-                return (
+                return (<>
                     <Space size="middle">
+                        <Link to={editUrl(item)}>编辑</Link>
                         {item.type === "content" && (
                             <>
                                 {item.publish === false ? (
@@ -149,30 +150,32 @@ export default function List() {
                                         <a
                                             target="_blank"
                                             href={
-                                                "https://clash-builder.echoyore.tech?id=" + id + "&preview"
+                                                `${builderHost}?id=` + id + "&preview"
                                             }>
                                             线下预览查看（切移动端）
                                         </a>
-                                        <Button onClick={() => publish(id)}>发布</Button>
+                                        <Button size="small" type="link" onClick={() => publish(id)}>发布</Button>
                                     </>
                                 ) : (
                                     <>
                                         <a
                                             target="_blank"
-                                            href={"https://clash-builder.echoyore.tech?id=" + id}>
+                                            href={`${builderHost}?id=` + id}>
                                             线上查看（切移动端）
                                         </a>
-                                        <Button onClick={() => unpublish(id)}>下架</Button>
+                                        <Button size="small" type="link" onClick={() => unpublish(id)}>下架</Button>
                                     </>
                                 )}
                             </>
                         )}
-                        <Link to={editUrl(item)}>编辑</Link>
-                        <Button onClick={() => copy(item)}>复制</Button>
-                        <Button onClick={() => saveAsTpl(item)}>保存为模版</Button>
-                        <Button onClick={() => delConfirm(id)}>删除</Button>
+
                     </Space>
-                );
+                    <Space size="middle">
+                        <Button type="link" size="small" onClick={() => copy(item)}>复制</Button>
+                        <Button type="link" size="small" onClick={() => delConfirm(id)}>删除</Button>
+                        <Button type="link" size="small" onClick={() => saveAsTpl(item)}>保存为模版</Button>
+                    </Space>
+                </>);
             },
         },
     ];
