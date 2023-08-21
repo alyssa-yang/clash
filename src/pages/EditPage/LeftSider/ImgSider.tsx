@@ -35,6 +35,31 @@ const settings = [
     value: url + "a41aeb8672805de1eb0094cf2a2f158e.jpg",
     style: defaultStyle,
   },
+  {
+    value: url + "ee144b4452cfc7cb058248230149d69b.jpeg",
+    style: defaultStyle,
+  },
+  {
+    value: url + "29e6f31e956905c829974c958a2f54d1.jpeg",
+    style: defaultStyle,
+  },
+
+  {
+    value: url + "2397e6e8269d9bd3deca71967a944547.png",
+    style: defaultStyle,
+  },
+  {
+    value: url + "718cee396b07126878cdb0f278e90dfb.png",
+    style: defaultStyle,
+  },
+  {
+    value: url + "da36bb03acda461ddd498ffc47987b05.jpeg",
+    style: defaultStyle,
+  },
+  {
+    value: url + "edfa08d4aad6849f8578f0d008a8cb42.jpeg",
+    style: defaultStyle,
+  },
 
   {
     value: url + "ba6c7d4b6cc628eb240f7b32d826e007.jpg",

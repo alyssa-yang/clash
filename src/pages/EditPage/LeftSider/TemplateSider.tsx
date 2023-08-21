@@ -2,7 +2,6 @@ import leftSideStyles from "./leftSide.module.less";
 import { useEffect, useState } from "react";
 import { getTemplateListEnd } from "src/request/end";
 import Axios from "src/request/axios";
-import { settings } from "./tpl";
 import { addCanvasByTemplate } from "src/store/editStore";
 
 
@@ -22,7 +21,7 @@ const TemplateSider = () => {
   return (
     <div className={leftSideStyles.main}>
       <ul className={leftSideStyles.box}>
-        {settings.map((item: any) => (
+        {list.map((item: any) => (
           <li
             className={leftSideStyles.item}
             key={item.id}

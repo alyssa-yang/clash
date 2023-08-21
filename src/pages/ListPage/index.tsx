@@ -41,7 +41,9 @@ export default function List() {
                 await Axios.post(deleteCanvasByIdEnd, { id })
                 message.success('删除成功')
                 fresh()
-            }
+            },
+            okText: '确定',
+            cancelText: '取消',
         })
     }
     const copy = async (item: ListItem) => {
@@ -66,7 +68,10 @@ export default function List() {
 
         if (res) {
             message.success("保存模板成功");
-            fresh();
+            setTimeout(() => {
+                fresh();
+            }, 1000);
+
         }
     };
 
@@ -107,13 +112,22 @@ export default function List() {
         {
             title: "标题",
             key: "title",
-            width: 200,
+            width: 150,
             render: (item: ListItem) => {
                 const title = item.title || "未命名";
                 return <Link to={editUrl(item)}>{title}</Link>;
             },
         },
-
+        {
+            title: "缩略图",
+            key: "thumbnail",
+            width: 200,
+            render: (item: ListItem) => {
+                return (
+                    item.thumbnail?.full && <Image src={item.thumbnail.full} alt={item.title} height={150} />
+                );
+            },
+        },
         {
             title: "类型",
             key: "type",
@@ -124,53 +138,34 @@ export default function List() {
             },
         },
         {
-            title: "缩略图",
-            key: "thumbnail",
-            width: 100,
-            render: (item: ListItem) => {
-                return (
-                    item.thumbnail?.full && <Image src={item.thumbnail.full} alt={item.title} height={150} />
-                );
-            },
-        },
-        {
             title: "操作",
             key: "action",
-            width: 200,
+            width: 150,
             fixed: 'right' as const,
             render: (item: ListItem) => {
                 const { id } = item;
                 return (<>
                     <Space size="middle">
-                        <Link to={editUrl(item)}>编辑</Link>
                         {item.type === "content" && (
                             <>
                                 {item.publish === false ? (
                                     <>
-                                        <a
-                                            target="_blank"
-                                            href={
-                                                `${builderHost}?id=` + id + "&preview"
-                                            }>
-                                            线下预览查看（切移动端）
-                                        </a>
+                                        <Button size="small" type="link" onClick={() => window.open(`${builderHost}?id=` + id + "&preview")}>预览</Button>
                                         <Button size="small" type="link" onClick={() => publish(id)}>发布</Button>
                                     </>
                                 ) : (
                                     <>
-                                        <a
-                                            target="_blank"
-                                            href={`${builderHost}?id=` + id}>
-                                            线上查看（切移动端）
-                                        </a>
+
+                                        <Button size="small" type="link" onClick={() => window.open(`${builderHost}?id=` + id)}>查看</Button>
                                         <Button size="small" type="link" onClick={() => unpublish(id)}>下架</Button>
                                     </>
                                 )}
                             </>
                         )}
 
-                    </Space>
-                    <Space size="middle">
+                        <Link to={editUrl(item)}>
+                            <Button type="link" size="small">编辑</Button>
+                        </Link>
                         <Button type="link" size="small" onClick={() => copy(item)}>复制</Button>
                         <Button type="link" size="small" onClick={() => delConfirm(id)}>删除</Button>
                         <Button type="link" size="small" onClick={() => saveAsTpl(item)}>保存为模版</Button>

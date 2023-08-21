@@ -1003,25 +1003,29 @@ export const bottomZIndex = () => {
     }
   })
 }
-//isNew标记为是否是新增页面
+
+// isNew 标记是否为新增页面，如果是新增，则在保存后需要跳转一次路由
 export const saveCanvas = async (
   successCallback: (id: number, isNew: boolean, res: any) => void
 ) => {
   const canvas = useEditStore.getState().canvas
-  const isNew = !canvas.id
+  let isNew = canvas.id == null
+  useEditStore.setState(draft => {
+    draft.hasSavedCanvas = true
+  })
   const res: any = await Axios.post(saveCanvasEnd, {
     id: canvas.id,
     type: canvas.type,
     title: canvas.title,
     content: JSON.stringify(canvas.content)
   })
+
   successCallback(res?.id, isNew, res)
 
   useEditStore.setState(draft => {
     if (isNew) {
       draft.canvas.id = res.id
     }
-    draft.hasSavedCanvas = true
   })
 }
 
@@ -1034,7 +1038,6 @@ export const fetchCanvas = async (id: number) => {
       draft.canvas.type = res.type
       draft.canvas.title = res.title
       draft.assembly.clear()
-      draft.hasSavedCanvas = true
       //初始化历史数据
       draft.canvasChangeHistory = [
         {
@@ -1072,7 +1075,6 @@ export const recordCanvasChangeHistory_2 = () => {
 
   useEditStore.setState(draft => {
     recordCanvasChangeHistory(draft)
-    draft.hasSavedCanvas = false
   })
 }
 //修改画布的标题

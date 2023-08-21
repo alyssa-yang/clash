@@ -8,14 +8,16 @@ import { useEffect } from 'react'
 import { builderHost, serverHost } from 'src/request/end'
 
 export default function Header() {
-    const navigate = useNavigate()
 
     const hasSavedCanvas = useEditStore(({ hasSavedCanvas }) => hasSavedCanvas)
-
+    console.log('hasSavedCanvas', hasSavedCanvas)
     unstable_usePrompt({
         when: !hasSavedCanvas,
         message: '离开后数据将不会保存，确认离开吗'
     })
+
+    const navigate = useNavigate()
+
     useEffect(() => {
         document.addEventListener('keydown', keyDown)
         return () => {
@@ -138,10 +140,10 @@ export default function Header() {
             <span className={styles.txt}>清空</span>
         </div>
 
-        <div className={classNames(styles.item)} onClick={saveAndDownload}>
+        {/* <div className={classNames(styles.item)} onClick={saveAndDownload}>
             <span
                 className={classNames("iconfont icon-yunxiazai_o", styles.icon)}></span>
             <span className={styles.txt}>保存并下载图片</span>
-        </div>
+        </div> */}
     </div>
 }
