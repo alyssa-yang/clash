@@ -168,7 +168,7 @@ export default function List() {
                         </Link>
                         <Button type="link" size="small" onClick={() => copy(item)}>复制</Button>
                         <Button type="link" size="small" onClick={() => delConfirm(id)}>删除</Button>
-                        <Button type="link" size="small" onClick={() => saveAsTpl(item)}>保存为模版</Button>
+                        {item.type == "content" && <Button type="link" size="small" onClick={() => saveAsTpl(item)}>保存为模版</Button>}
                     </Space>
                 </>);
             },

@@ -53,7 +53,7 @@ export default function EditCmpStyle({
         </> : null}
 
         {/* 字体 */}
-        {styleValue.fontSize ? <>
+        {styleValue.fontSize !== undefined ? <>
             <Item label="字体大小" name="fontSize">
                 <Input />
             </Item>

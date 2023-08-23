@@ -32,16 +32,6 @@ const TemplateSider = () => {
             <img src={item.thumbnail?.header} alt={item.title} />
           </li>
         ))}
-        {list.map((item: any) => (
-          <li
-            className={leftSideStyles.item}
-            key={item.id}
-            onClick={() => {
-              addCanvasByTemplate(item);
-            }}>
-            <div className={leftSideStyles.desc}>{item.title}</div>
-          </li>
-        ))}
       </ul>
     </div>
   );
