@@ -140,10 +140,10 @@ export default function Header() {
             <span className={styles.txt}>清空</span>
         </div>
 
-        {/* <div className={classNames(styles.item)} onClick={saveAndDownload}>
+        <div className={classNames(styles.item)} onClick={saveAndDownload}>
             <span
                 className={classNames("iconfont icon-yunxiazai_o", styles.icon)}></span>
             <span className={styles.txt}>保存并下载图片</span>
-        </div> */}
+        </div>
     </div>
 }
