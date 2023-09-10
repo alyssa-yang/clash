@@ -5,7 +5,7 @@ import useEditStore, { clearCanvas, saveCanvas } from 'src/store/editStore'
 import { message } from 'antd'
 import { goNextCanvasHistory, goPrevCanvasHistory } from 'src/store/historySlice'
 import { useEffect } from 'react'
-import { builderHost, serverHost } from 'src/request/end'
+import { builderHost, downloadFile, serverHost } from 'src/request/end'
 
 export default function Header() {
 
@@ -82,10 +82,11 @@ export default function Header() {
             }
             // 下载图片
             const imgUrl = res.thumbnail.full;
-            window.open(imgUrl)
+            downloadFile(imgUrl, res.title)
+            // window.open(imgUrl)
             // const ele = document.createElement('a')
-            // ele.href = img
-            // .replace(`${serverHost}/`, "");
+            // ele.href = imgUrl
+            // // .replace(`${serverHost}/`, "");
             // ele.download = res.title + '.png'
             // ele.style.display = 'none'
             // document.body.appendChild(ele)

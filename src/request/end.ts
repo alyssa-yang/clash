@@ -32,3 +32,20 @@ export const publishEnd = end + '/api/web/content/publish'
 export const unpublishEnd = end + '/api/web/content/unpublish '
 
 export const myAxios = axios
+
+export function downloadFile (fileUrl: string, fileName: string) {
+  fetch(fileUrl)
+    .then(response => response.blob())
+    .then(blob => {
+      const a = document.createElement('a')
+      const parseUrl = URL.createObjectURL(blob)
+      a.href = parseUrl
+      a.download = fileName
+
+      // 在部分浏览器中，创建Blob链接后，需要延迟点击事件才能正常下载
+      setTimeout(() => {
+        a.click()
+        URL.revokeObjectURL(parseUrl)
+      }, 0)
+    })
+}
