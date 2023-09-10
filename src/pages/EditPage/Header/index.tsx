@@ -81,15 +81,16 @@ export default function Header() {
                 navigate(`?id=${_id}`)
             }
             // 下载图片
-            const img = res.thumbnail.full;
-            const ele = document.createElement('a')
-            ele.href = img
+            const imgUrl = res.thumbnail.full;
+            window.open(imgUrl)
+            // const ele = document.createElement('a')
+            // ele.href = img
             // .replace(`${serverHost}/`, "");
-            ele.download = res.title + '.png'
-            ele.style.display = 'none'
-            document.body.appendChild(ele)
-            ele.click()
-            document.body.removeChild(ele)
+            // ele.download = res.title + '.png'
+            // ele.style.display = 'none'
+            // document.body.appendChild(ele)
+            // ele.click()
+            // document.body.removeChild(ele)
         })
     }
     return <div className={styles.main}>
