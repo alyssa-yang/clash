@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       '/api': 'http://clash-server.echoyore.tech',
       // '/api': 'http://localhost:4000',
-      '/static': 'http://template.codebus.tech'
+      '/static': 'http://clash-server.echoyore.tech'
     }
   },
   plugins: [tsconfigPaths(), react()],

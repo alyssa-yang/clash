@@ -83,7 +83,8 @@ export default function Header() {
             // 下载图片
             const img = res.thumbnail.full;
             const ele = document.createElement('a')
-            ele.href = img.replace(`${serverHost}/`, "");
+            ele.href = img
+            // .replace(`${serverHost}/`, "");
             ele.download = res.title + '.png'
             ele.style.display = 'none'
             document.body.appendChild(ele)
