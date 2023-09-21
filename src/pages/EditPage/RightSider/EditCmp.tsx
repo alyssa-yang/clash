@@ -10,8 +10,8 @@ export default function EditCmp({ selectedCmp, formKeys }: { selectedCmp: ICmpWi
         <Form
             initialValues={{
                 ...style,
-                borderRadius: style.borderRadius ? style.borderRadius.substring(0, style.borderRadius.length - 2) : '',
-                lineHeight: style.lineHeight ? style.lineHeight.substring(0, style.lineHeight.length - 2) : '',
+                borderRadius: style.borderRadius && typeof style.borderRadius === 'string' ? style.borderRadius?.substring(0, style.borderRadius.length - 2) : '',
+                lineHeight: style.lineHeight && typeof style.lineHeight === 'string' ? style.lineHeight?.substring(0, style.lineHeight.length - 2) : '',
                 value,
                 alignPage,
                 onClick
