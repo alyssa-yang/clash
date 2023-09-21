@@ -74,7 +74,7 @@ const LeftSider = memo(() => {
                     />
                     <span className={styles.cmpText}>图形</span>
                 </li>
-                <li
+                {/* <li
                     className={classNames(
                         styles.cmp,
                         showSide === isFormComponent ? styles.selected : ""
@@ -82,7 +82,7 @@ const LeftSider = memo(() => {
                     onClick={() => _setShowSide(isFormComponent)}>
                     <i className={classNames("iconfont icon-zidingyibiaodan", styles.cmpIcon)} />
                     <span className={styles.cmpText}>表单</span>
-                </li>
+                </li> */}
             </ul>
             {showSide === isTemplate && <TemplateSider />}
             {showSide === isTextComponent && <TextSider />}
