@@ -83,15 +83,6 @@ export default function Header() {
             // 下载图片
             const imgUrl = res.thumbnail.full;
             downloadFile(imgUrl, res.title)
-            // window.open(imgUrl)
-            // const ele = document.createElement('a')
-            // ele.href = imgUrl
-            // // .replace(`${serverHost}/`, "");
-            // ele.download = res.title + '.png'
-            // ele.style.display = 'none'
-            // document.body.appendChild(ele)
-            // ele.click()
-            // document.body.removeChild(ele)
         })
     }
     return <div className={styles.main}>
