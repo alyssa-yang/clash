@@ -10,6 +10,8 @@ export default function EditCmp({ selectedCmp, formKeys }: { selectedCmp: ICmpWi
         <Form
             initialValues={{
                 ...style,
+                borderRadius: style.borderRadius ? style.borderRadius.substring(0, style.borderRadius.length - 2) : '',
+                lineHeight: style.lineHeight ? style.lineHeight.substring(0, style.lineHeight.length - 2) : '',
                 value,
                 alignPage,
                 onClick
@@ -21,7 +23,7 @@ export default function EditCmp({ selectedCmp, formKeys }: { selectedCmp: ICmpWi
             onValuesChange={(values) => {
                 const key = Object.keys(values)[0]
                 const value = Object.values(values)[0] as any
-                if (key === 'lineHeight') {
+                if (key === 'lineHeight' || key === "borderRadius") {
                     updateSelectedCmpStyle({ [key]: `${value}px` })
                 } else if (['backgroundColor', 'color', 'borderColor'].includes(key)) {
                     console.log('value.toHexString() ', value.toHexString())

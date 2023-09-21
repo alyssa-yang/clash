@@ -64,10 +64,10 @@ export default function EditCmpStyle({
                     { value: 'lighter', label: 'lighter' }]} />
             </Item>
             <Item label="字体行高" name="lineHeight">
-                <Input />
+                <InputNumber addonAfter="px" />
             </Item>
             <Item label="字体颜色" name="color">
-                <ColorPicker format="hex" placement="bottomLeft" showText />
+                <ColorPicker placement="bottomLeft" showText />
             </Item>
             <Item label="装饰线" name="textDecoration">
                 <Select options={[{ value: 'none', label: '无' },
@@ -112,10 +112,10 @@ export default function EditCmpStyle({
                 <ColorPicker placement="bottomLeft" showText />
             </Item>
             <Item label="圆角" name="borderRadius">
-                <Input />
+                <InputNumber addonAfter="px" />
             </Item>
             <Item label="背景颜色" name="backgroundColor">
-                <ColorPicker format="hex" placement="bottomLeft" showText />
+                <ColorPicker placement="bottomLeft" showText />
             </Item>
         </> : null}
 
